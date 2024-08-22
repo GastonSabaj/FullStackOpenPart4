@@ -1,9 +1,11 @@
 const config = require('./utils/config')
+const usersRouter = require('./controllers/users') //Defino el router para el controlador de users
+const loginRouter = require('./controllers/login')
 const express = require('express')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
-const notesRouter = require('./controllers/notes')
+const notesRouter = require('./controllers/notes') //Defino el router para el controlador de notes
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -25,8 +27,10 @@ app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-//Lo que hago es hacer un enrutador que arma las rutas a partir de /api/notes
+//Lo que hago es hacer uso de los enrutadores
 app.use('/api/notes', notesRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
